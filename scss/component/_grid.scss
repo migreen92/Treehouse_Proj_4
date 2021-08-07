@@ -1,0 +1,55 @@
+
+
+/* ============================================= */
+/*              Grid System                      */
+/* ============================================= */
+
+.container {
+  padding: 0 10px;
+  max-width: $max-width;
+  margin: auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  padding: 1em 10px;
+    @media screen and (min-width: $min-desk) {
+      flex-direction: row;
+    }
+}
+
+[class^=col] {
+  margin-top: 10px;
+  flex-basis: 100%;
+  min-height: 25px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+@for $i from 1 through $grid-col { //$grid-col = total #
+  .theme.col-#{$i} {
+      background-color: adjust-hue($color-two, $i * 50);
+        // uses loop to change background color of
+        // each .col 50pts from $color-two
+    }
+  @media screen and (min-width: $min-desk) { 
+      //space distribution will only occur at Desktop breakpoint
+    .col-#{$i} { //target # of column in the loop
+      flex-basis: (100 / ($grid-col / $i) * 1%);
+        // 100 divided by (12/col #), *1% -->
+        // 100 / (12/4) * 1% = 25% (col-4 = 25% flex basis)
+      justify-content: center;
+      margin:auto;
+    }
+    .col-#{$i} {
+        //multiple elements within a .col will display in a flex row
+      display: flex;
+      flex-direction: row;
+    }
+    [class^=col] + [class^=col] {
+      margin-left: 10px;
+        //and .col next to another .col will have marg left: 10px
+    }
+  }
+}
